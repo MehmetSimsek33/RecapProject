@@ -21,7 +21,7 @@ namespace ConsoleUI
             cars.DailyPrice = 300;
             cars.Description = "A";
             carManager.add(cars);
-
+           
             foreach (var car in carManager.GetCarsByBrandId(2))
             {
                 Console.WriteLine(car.Description);
