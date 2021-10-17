@@ -25,6 +25,8 @@ namespace Bussiness.Concrete
                 _cardal.add(car);
             }
             else
+
+
             {
                 Console.WriteLine("Araba ismi 2 haneden yuksek olmalıdır ve fiyatı 0dan buyuk olmalıdır");
             }
