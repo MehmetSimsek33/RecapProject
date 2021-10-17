@@ -12,17 +12,27 @@ namespace Bussiness.Concrete
     public class CarManager : ICarService
     {
         ICarDal _cardal;
+
         public CarManager(ICarDal cardal)
         {
             _cardal = cardal;
         }
+
         public void add(Car car)
         {
-            _cardal.add(car);
+            if(car.Description.Length>=2 && car.DailyPrice>0)
+            {
+                _cardal.add(car);
+            }
+            else
+            {
+                Console.WriteLine("Araba ismi 2 haneden yuksek olmalıdır ve fiyatı 0dan buyuk olmalıdır");
+            }
         }
 
         public void delete(Car car)
         {
+            
             _cardal.delete(car);
         }
 
@@ -31,19 +41,19 @@ namespace Bussiness.Concrete
             return _cardal.GetAll();
         }
 
-        public List<Car> GetAllByBrand(int brandId)
-        {
-            return _cardal.GetAllByBrand(brandId);
-        }
-
-        public List<Car> GetAllColor(int colorId)
-        {
-            return _cardal.GetAllColor(colorId);
-        }
-
         public Car GetById(int id)
         {
-            return _cardal.GetById(id);
+            return _cardal.Get(x => x.id == id);
+        }
+
+        public List<Car> GetCarsByBrandId(int brandId)
+        {
+            return _cardal.GetAll(x => x.BrandId == brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _cardal.GetAll(x => x.ColorId == colorId);
         }
 
         public void update(Car car)

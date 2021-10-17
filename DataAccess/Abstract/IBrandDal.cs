@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-   public interface IBrand
+   public interface IBrandDal: IEntityRepository<Brand>
     {
-        Brand GetById(int id);
-        void add(Brand brand);
-        void delete(Brand brand);
-        void update(Brand brand);
+ 
     }
 }
