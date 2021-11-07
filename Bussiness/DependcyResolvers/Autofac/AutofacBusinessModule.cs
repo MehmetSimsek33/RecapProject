@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
+using Business.Abstract;
+using Business.Concrete;
 using Bussiness.Abstract;
 using Bussiness.Concrete;
 using Castle.DynamicProxy;
@@ -35,6 +37,9 @@ namespace Bussiness.DependcyResolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+
+            builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
+            builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
             //Bak aspecti varmı varsa calıstır Attribute
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

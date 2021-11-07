@@ -3,6 +3,7 @@ using Bussiness.Constants;
 using Bussiness.ValidationRules;
 using Core.Aspects.Autofac;
 using Core.CrosCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Abstract;
@@ -19,21 +20,30 @@ namespace Bussiness.Concrete
     public class CarManager : ICarService
     {
         ICarDal _cardal;
+        ICarService _carService;
 
-        public CarManager(ICarDal cardal)
+        public CarManager(ICarDal cardal, ICarService carService)
         {
             _cardal = cardal;
+            _carService = carService;
         }
 
         [ValidationAspect(typeof(CarValidator))]
         public IResult add(Car car)
         {
-          
-        
 
-          
+            IResult result = BusinessRules.Run(CheckIfCarDescriptionExist(car.Description));
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
                 _cardal.add(car);
-                return new SuccessResult(Messages.ProductAdded);
+                return new SuccessResult(Messages.ProductAdded); ;
+            }
+
+       
            
         }
 
@@ -74,5 +84,15 @@ namespace Bussiness.Concrete
             _cardal.update(car);
           return new SuccessResult(Messages.ProductUpdate);
         }
+        private IResult CheckIfCarDescriptionExist(string description)
+        {
+            var result = _cardal.GetAll(p => p.Description == description).Any();
+            if (result)
+            {
+                return new ErrorResult("Bu isimde kayıt olmaz");
+            }
+            return new SuccessResult();
+        }
     }
+    
 }

@@ -14,5 +14,7 @@ namespace Bussiness.Constants
         public static string ProductListed = "Urunleriniz Listlendi";
         public static string ProductUpdate = "Güncelleme İşleminiz başarili Listlendi";
         public static string ProductDeleted = "Silme işleminiz başarı ile gerçekleşti";
+
+        public static string CheckIfCarPriceControl = "Urun Fiyati 0 dan kucuk olamaz";
     }
 }
