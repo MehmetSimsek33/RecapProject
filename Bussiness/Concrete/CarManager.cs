@@ -1,4 +1,6 @@
-﻿using Bussiness.Abstract;
+﻿using Bussines.BusimessAspect.Autofac;
+using Bussiness.Abstract;
+
 using Bussiness.Constants;
 using Bussiness.ValidationRules;
 using Core.Aspects.Autofac;
@@ -20,14 +22,13 @@ namespace Bussiness.Concrete
     public class CarManager : ICarService
     {
         ICarDal _cardal;
-        ICarService _carService;
 
-        public CarManager(ICarDal cardal, ICarService carService)
+
+        public CarManager(ICarDal cardal)
         {
             _cardal = cardal;
-            _carService = carService;
         }
-
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult add(Car car)
         {

@@ -11,8 +11,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-             CarDetailDtoTest();
-           // CarTest();
+           // CarDetailDtoTest();
+            // CarTest();
 
 
             //Car cars = new Car();
@@ -24,24 +24,25 @@ namespace ConsoleUI
             //cars.Description = "A";
             //carManager.add(cars);
         }
-        static void CarTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            carManager.add(new Car() { BrandId = 4, ColorId = 1, DailyPrice = 250, ModelYear = "32", Description = "mercedes" });
-            var car = carManager.GetById(2).Data;
-            car.Description = "bmv";
-            carManager.update(car);
-        }
+        //    static void CarTest()
+        //    {
+        //        CarManager carManager = new CarManager(new EfCarDal());
+        //        carManager.add(new Car() { BrandId = 4, ColorId = 1, DailyPrice = 250, ModelYear = "32", Description = "mercedes" });
+        //        var car = carManager.GetById(2).Data;
+        //        car.Description = "bmv";
+        //        carManager.update(car);
+        //    }
 
-        private static void CarDetailDtoTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
+        //    private static void CarDetailDtoTest()
+        //    {
+        //        CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetCarDetailDtos().Data)
-            {
-                Console.WriteLine(car.Description + " " + car.BrandName + " " + car.ColorName
-                    + " " + car.DailyPrice + " " + car.ModelYear);
-            }
-        }
+        //        foreach (var car in carManager.GetCarDetailDtos().Data)
+        //        {
+        //            Console.WriteLine(car.Description + " " + car.BrandName + " " + car.ColorName
+        //                + " " + car.DailyPrice + " " + car.ModelYear);
+        //        }
+        //    }
+        //}
     }
 }

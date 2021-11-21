@@ -2,11 +2,16 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
+using Bussines.Abstract;
+using Bussines.Concrete;
 using Bussiness.Abstract;
 using Bussiness.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.Jwt;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramewrok;
 using System;
 using System.Collections.Generic;
@@ -35,11 +40,16 @@ namespace Bussiness.DependcyResolvers.Autofac
             builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+   ;
 
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
+
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             //Bak aspecti varmı varsa calıstır Attribute
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
