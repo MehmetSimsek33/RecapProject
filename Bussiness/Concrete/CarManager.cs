@@ -4,6 +4,7 @@ using Bussiness.Abstract;
 using Bussiness.Constants;
 using Bussiness.ValidationRules;
 using Core.Aspects.Autofac;
+using Core.Aspects.Autofac.Caching;
 using Core.CrosCuttingConcerns.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -60,6 +61,7 @@ namespace Bussiness.Concrete
             return new SuccessDataResult<Car> (_cardal.Get(x => x.id == id),Messages.ProductListed);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_cardal.GetAll(),Messages.ProductListed);
@@ -79,7 +81,8 @@ namespace Bussiness.Concrete
         {
             return new SuccessDataResult<List<Car>>(_cardal.GetAll(x => x.ColorId == colorId), Messages.ProductListed);
         }
-
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult update(Car car)
         {
             _cardal.update(car);
@@ -93,6 +96,11 @@ namespace Bussiness.Concrete
                 return new ErrorResult("Bu isimde kayıt olmaz");
             }
             return new SuccessResult();
+        }
+
+        public IResult AddTransactionTest(Car car)
+        {
+            throw new NotImplementedException();
         }
     }
     

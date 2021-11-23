@@ -22,6 +22,8 @@ using Core.Utilities.IoC;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
+using Core.Utilities.Extensions;
+using Core.DependcyResolver;
 
 namespace WebAPI
 {
@@ -44,7 +46,7 @@ namespace WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -62,7 +64,10 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            ServiceTool.Create(services);
+            //yeni module eklemek ýstersek buradan eklýyebýlýrýz 
+            services.AddDependcyResolvers(new ICoreModule[] {
+            new CoreModule()
+            });
 
         }
 

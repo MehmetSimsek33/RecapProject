@@ -20,5 +20,7 @@ namespace Bussiness.Abstract
         IResult add(Car car);
         IResult delete(Car car);
         IResult update(Car car);
+
+        IResult AddTransactionTest(Car car);
     }
 }
