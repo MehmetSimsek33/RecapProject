@@ -102,6 +102,16 @@ namespace Bussiness.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandId(int brandId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_cardal.GetCarDetailsByBrandId(brandId), Messages.ProductListed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByColorId(int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_cardal.GetCarDetailsByColorId(colorId), Messages.ProductListed);
+        }
     }
     
 }

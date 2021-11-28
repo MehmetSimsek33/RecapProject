@@ -85,6 +85,15 @@ namespace WebAPI.Controllers
 
         }
 
-
+        [HttpGet("GetByRentalDetail")]
+        public IActionResult GetByCarDetails()
+        {
+            var result = _rentalService.GetRentalDetailDto();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
