@@ -11,6 +11,7 @@ using Core.Utilities.Business;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Core.Utilities.Helpers;
+using Core.Utilities.CloudinaryAdapter;
 
 namespace Business.Concrete
 {
@@ -24,18 +25,19 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile file, CarImage carImage)
         {
-
             IResult result = BusinessRules.Run(CheckImageLimitExceeded(carImage.CarId));
             if (result != null)
             {
                 return result;
             }
-           var deneme= carImage.ImagePath;
-            carImage.ImagePath = FileHelper.Add(file);
+            var respond = CloudinaryAdapter.UploadPhoto(file);
             carImage.Date = DateTime.Now;
+            carImage.ImagePath = respond;
             _carImageDal.add(carImage);
             return new SuccessResult();
-        }
+        
+      
+    }
 
 
         public IResult Delete(CarImage carImage)
@@ -77,11 +79,11 @@ namespace Business.Concrete
         private List<CarImage> CheckIfCarImageNull(int id)
         {
             //Arabanın resmi yoksa default resim koyulması için yazdığımzı kod bloğu.
-            string path = @"\Images\bmw.jpg";
+           
             var result = _carImageDal.GetAll(c => c.CarId == id).Any();
             if (!result)
             {
-                return new List<CarImage> { new CarImage { CarId = id, ImagePath = path, Date = DateTime.Now } };
+                return new List<CarImage> { new CarImage { CarId = id, ImagePath = "https://res.cloudinary.com/dx3jsfibq/image/upload/v1623323058/sample.jpg", Date = DateTime.Now } };
             }
             return _carImageDal.GetAll(p => p.CarId == id);
         }

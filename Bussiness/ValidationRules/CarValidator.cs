@@ -18,9 +18,11 @@ namespace Bussiness.ValidationRules
             RuleFor(c => c.ModelYear).NotEmpty();
             RuleFor(c => c.ColorId).NotEmpty();
             RuleFor(c => c.BrandId).NotEmpty();
+            RuleFor(c => c.CarFindexPoint).NotEmpty();
+            RuleFor(c => c.CarFindexPoint).GreaterThan(10);
 
             //Description A ILE BASLAMAK ZORUNDA
-            //RuleFor(p => p.Description).Must(StartWithA);
+            RuleFor(p => p.Description).Must(StartWithA).WithMessage("Açıklama A harfi ile başlamalı");
 
         }
 

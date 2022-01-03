@@ -5,6 +5,7 @@ using Business.Concrete;
 using Bussines.Abstract;
 using Bussines.Concrete;
 using Bussiness.Abstract;
+using Bussiness.Abstract.Business.Abstract;
 using Bussiness.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
@@ -43,7 +44,8 @@ namespace Bussiness.DependcyResolvers.Autofac
             builder.RegisterType<RentalManager>().As<IRentalService>().SingleInstance();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>().SingleInstance();
 
-            ;
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
+            builder.RegisterType<EfICreditCardDal>().As<ICreditCardDal>().SingleInstance();
 
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
@@ -53,6 +55,20 @@ namespace Bussiness.DependcyResolvers.Autofac
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<EfCardDal>().As<ICardDal>().SingleInstance();
+            builder.RegisterType<CardManager>().As<ICardService>().SingleInstance();
+
+            builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+
+            builder.RegisterType<EfOperationClaimdal>().As<IOperationDal>().SingleInstance();
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>().SingleInstance();
+
+
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
+
             //Bak aspecti varmı varsa calıstır Attribute
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

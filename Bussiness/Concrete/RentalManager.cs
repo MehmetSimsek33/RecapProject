@@ -24,16 +24,22 @@ namespace Bussiness.Concrete
         public IResult Add(Rental rental)
         {
 
-            if (rental.ReturnDate == null)
+            var results = _rentalDal.GetAll(re => re.CarId == rental.CarId);
+            foreach (var result in results)
             {
-                _rentalDal.add(rental);
-                return new SuccessResult("Başarı ile arabayi kiraladınız tebrikler");
+                if (result.ReturnDate == null ||
+                    (rental.RentDate >= result.RentDate && rental.RentDate <= result.ReturnDate) ||
+                    (rental.ReturnDate >= result.RentDate && rental.RentDate <= result.ReturnDate)
+                    || (rental.RentDate < DateTime.Now || rental.RentDate > rental.ReturnDate) 
+                    )
+                {
+                    return new ErrorResult("Araç şu anda kiralanamaz");
+                }
             }
-            else
-            {
-                return new ErrorResult("Malesef araba su an baskasi tarafindan kiralanmıstır ");
-            }
-               
+
+            _rentalDal.add(rental);
+            return new SuccessResult("Araç Kiralandi");
+
 
         }
 

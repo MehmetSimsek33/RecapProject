@@ -14,5 +14,6 @@ namespace Entities.DTOs
         public string ColorName { get; set; }
         public string ModelYear { get; set; }
         public int DailyPrice { get; set; }
+        public List<string> Images { get; set; }
     }
 }

@@ -49,17 +49,17 @@ namespace Bussines.Concrete
                 return new ErrorDataResult<User>("Kullanıcı bulunamadı");
             }
 
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
             {
                 return new ErrorDataResult<User>("Parola hatası");
             }
 
-            return new SuccessDataResult<User>(userToCheck, "Basarılı giriş");
+            return new SuccessDataResult<User>(userToCheck.Data, "Basarılı giriş");
         }
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            if (_userService.GetByMail(email).Data != null)
             {
                 return new ErrorResult("Kullanıcı mevcut");
             }

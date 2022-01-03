@@ -29,6 +29,7 @@ namespace DataAccess.Concrete.EntityFramewrok
                                  CustomerFirstNameLastName = user.FirstName +" "+ user.LastName,
                                  RentDate = rental.RentDate,
                                  ReturnDate = rental.ReturnDate,
+                                 CarDesciription=car.Description
 
 
 

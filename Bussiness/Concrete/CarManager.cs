@@ -31,27 +31,27 @@ namespace Bussiness.Concrete
         }
         [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
-        public IResult add(Car car)
+        public IDataResult<Car> add(Car car)
         {
-
             IResult result = BusinessRules.Run(CheckIfCarDescriptionExist(car.Description));
-            if (result != null)
-            {
-                return result;
-            }
-            else
-            {
-                _cardal.add(car);
-                return new SuccessResult(Messages.ProductAdded); ;
-            }
+            _cardal.add(car);
+            return new SuccessDataResult<Car>(car, Messages.ProductAdded);
 
-       
-           
+            //if (result != null)
+            //{
+            //    return result;
+            //}
+            //else
+            //{ _cardal.add(car);
+           // return new SuccessDataResult<Car>(car, Messages.ProductAdded);
+
+            //}
         }
 
-        public IResult delete(Car car)
+        public IResult Delete(int id)
         {
-
+            var result = _cardal.Get(c => c.id == id);
+            _cardal.delete(result);
             return new SuccessResult(Messages.ProductDeleted);
         }
 
@@ -88,6 +88,7 @@ namespace Bussiness.Concrete
             _cardal.update(car);
           return new SuccessResult(Messages.ProductUpdate);
         }
+
         private IResult CheckIfCarDescriptionExist(string description)
         {
             var result = _cardal.GetAll(p => p.Description == description).Any();
@@ -111,6 +112,16 @@ namespace Bussiness.Concrete
         public IDataResult<List<CarDetailDto>> GetCarDetailsByColorId(int colorId)
         {
             return new SuccessDataResult<List<CarDetailDto>>(_cardal.GetCarDetailsByColorId(colorId), Messages.ProductListed);
+        }
+
+        public IDataResult<CarDetailDto> GetCarDetailDto(int carId)
+        {
+            return new SuccessDataResult<CarDetailDto>(_cardal.GetCarDetailDto(carId), "Araba Bilgileri");
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsWithDetailsByBrandIdAndColorId(int brandId, int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_cardal.GetCarsWithDetailsByBrandIdAndColorId(brandId,colorId), Messages.ProductListed);
         }
     }
     

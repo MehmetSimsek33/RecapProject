@@ -42,9 +42,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("delete")]
-        public IActionResult Delete(Car car)
+        public IActionResult Delete(int id)
         {
-            var result = _carService.delete(car);
+            var result = _carService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -73,6 +73,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet("GetByCarDetail")]
         public IActionResult GetByCarDetails()
         {
@@ -123,5 +124,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetCarsWithDetailsByBrandIdAndColorId")]
+        public IActionResult GetCarsWithDetailsByBrandIdAndColorId(int brandId,int colorId)
+        {
+            var result = _carService.GetCarsWithDetailsByBrandIdAndColorId(brandId, colorId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        
+        [HttpGet("GetCarDetailDto")]
+        public IActionResult GetCarDetailDto(int id)
+        {
+            var result = _carService.GetCarDetailDto(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
+    
 }
